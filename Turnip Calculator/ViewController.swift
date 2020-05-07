@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
-
+    
     @IBOutlet weak var turnipPriceTextField: NSTextField!
     
     @IBOutlet weak var turnipSellingTextField: NSTextField!
@@ -21,17 +21,17 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         // results field will be read only. 
         resultsTextField.isEditable = false
         
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
     
@@ -40,27 +40,27 @@ class ViewController: NSViewController {
         
         // calculate the stats for the values in the fields.
         
-        do {
-            let purchase = Int(turnipPriceTextField.stringValue)!
-            let selling = Int(turnipSellingTextField.stringValue)!
-            let units = Int(numTurnipsBoughtTextField.stringValue)!
+        
+        let purchase = Int(turnipPriceTextField.stringValue) ?? -1
+        let selling = Int(turnipSellingTextField.stringValue) ?? -1
+        let units = Int(numTurnipsBoughtTextField.stringValue) ?? -1
+        
+        if (purchase > 0 && selling > 0 && units > 0) {
             
             let calcResults = Turnip(purchasePrice: purchase, sellingPrice: selling, unitsPurchased: units)
             
             
             resultsTextField.stringValue = calcResults.generateCalculationResults()
             
-        }
-        catch {
             
-            resultsTextField.stringValue = "ERROR: \nNot all the strings that were entered were integers, please try again with whole numbers in all the boxes."
+        } else {
             
+            resultsTextField.stringValue = "ERROR: \nNot all the strings that were entered were integers,\nplease try again with whole numbers in all the boxes."
         }
-        
         
         
     }
     
-
+    
 }
 
